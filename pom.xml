@@ -1,0 +1,98 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <groupId>com.darwinmendoza</groupId>
+  <artifactId>GestionDeContactos</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <properties>
+	  <maven.compiler.source>17</maven.compiler.source>
+	  <maven.compiler.target>17</maven.compiler.target>
+	  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	  
+	  <!-- Versiones de dependencias-->
+	  <flatlaf.version>3.2.5</flatlaf.version>
+	  <jackson.version>2.16.0</jackson.version>
+	  <jfreechart.version>1.5.4</jfreechart.version>
+  </properties>
+  
+  <dependencies>
+  <!--Flatlaf para interfaz gráfica moderna -->
+	  <dependency>
+	  	<groupId>com.formdev</groupId>
+	  	<artifactId>flatlaf</artifactId>
+	  	<version>${flatlaf.version}</version>
+	  </dependency>
+	  
+	   <!-- Jackson para procesamiento JSON-->
+	   <dependency>
+	   	<groupId>com.fasterxml.jackson.core</groupId>
+	   	<artifactId>jackson-databind</artifactId>
+	   	<version>${jackson.version}</version>
+	   	<exclusions>
+	   		<!-- Excluir dependencias transitivas innecesarias-->
+	   		<exclusion>
+	   			<groupId>com.fasterxml.jackson.module</groupId>
+	   			<artifactId>jackson-module-jaxb-annotations</artifactId>
+	   		</exclusion>
+	   	</exclusions>
+	   </dependency>
+	   
+	   <!-- JFreeChart para gráficos-->
+	   <dependency>
+	   	<groupId>org.jfree</groupId>
+	   	<artifactId>jfreechart</artifactId>
+	   	<version>${jfreechart.version}</version>
+	   </dependency>
+  </dependencies>
+  
+  <build>
+  	<plugins>
+  		<!-- Plugin para empaquetar la aplicación con todas sus dependencias-->
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-assembly-plugin</artifactId>
+  			<version>3.6.0</version>
+  			<configuration>
+  				<archive>
+  					<manifest>
+  						<mainClass>com.gestioncontactos.Principal</mainClass>
+  					</manifest>
+  				</archive>
+  				<descriptorRefs>
+  					<descriptorRef>jar-with-dependencies</descriptorRef>
+  				</descriptorRefs>
+  			</configuration>
+  			<executions>
+  				<execution>
+  					<id>make-assembly</id>
+  					<phase>package</phase>
+  					<goals>
+  						<goal>single</goal>
+  					</goals>
+  				</execution>
+  			</executions>
+  		</plugin>
+  		<plugin>
+  			<groupId>org.owasp</groupId>
+  			<artifactId>dependency-check-maven</artifactId>
+  			<version>12.1.0</version>
+  			<executions>
+  				<execution>
+  					<goals>
+  						<goal>check</goal>
+  					</goals>
+  					<phase>verify</phase>
+  				</execution>
+  			</executions>
+  		</plugin>
+  	</plugins>
+  </build>
+ 
+  <repositories>
+  	<repository>
+  		<id>central</id>
+  		<url>https://repo.maven.apache.org/maven2</url>
+  	</repository>
+  </repositories>
+</project>
